@@ -37,13 +37,18 @@ body{
   margin:0;height:100%;position:relative;overflow:hidden;background:var(--bg);color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","SF Pro Display","Helvetica Neue",Helvetica,Arial,sans-serif;
   font-size:17px;line-height:1.3;-webkit-font-smoothing:antialiased;
-  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:text;touch-action:manipulation;
+  -webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none;touch-action:manipulation;
 }
 button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
 input,textarea,select{-webkit-user-select:text;user-select:text}
 .ic{width:24px;height:24px;flex:none;display:block}
 .chev{stroke-width:2.4;color:var(--chev);width:18px;height:18px}
-.page{position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg);transition:transform .34s cubic-bezier(.32,.72,0,1);box-shadow:-10px 0 30px rgba(0,0,0,.07)}
+
+/* pages */
+.page{
+  position:absolute;inset:0;display:flex;flex-direction:column;background:var(--bg);
+  transition:transform .34s cubic-bezier(.32,.72,0,1);box-shadow:-10px 0 30px rgba(0,0,0,.07);
+}
 .page.detail{background:var(--card)}
 .nav{display:flex;align-items:center;justify-content:space-between;padding:6px 14px 4px;min-height:58px;flex:none}
 .nav.end{justify-content:flex-end}
@@ -60,6 +65,8 @@ input,textarea,select{-webkit-user-select:text;user-select:text}
 .scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2px;line-height:1.15}
 .subl{color:var(--sub);font-size:18px;margin:0 18px 18px}
+
+/* boîtes */
 .card{background:var(--card);border-radius:26px;margin:0 16px 8px;overflow:hidden}
 .row{display:flex;align-items:center;height:56px;padding:0 18px;position:relative;cursor:pointer}
 .row+.row::before{content:"";position:absolute;top:0;left:66px;right:18px;height:.5px;background:var(--sep)}
@@ -71,8 +78,13 @@ h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2p
 .sech{display:flex;justify-content:space-between;align-items:center;margin:26px 30px 12px 34px;font-size:23px;font-weight:700;cursor:pointer}
 .sech .ic{color:var(--blue);width:26px;height:26px;stroke-width:2.4;transition:transform .2s}
 .sech .rot{transform:rotate(-90deg)}
-.fab{position:absolute;right:20px;bottom:20px;width:58px;height:58px;border-radius:50%;background:var(--card);box-shadow:0 4px 20px rgba(0,0,0,.13);display:grid;place-items:center}
+.fab{
+  position:absolute;right:20px;bottom:20px;width:58px;height:58px;border-radius:50%;background:var(--card);
+  box-shadow:0 4px 20px rgba(0,0,0,.13);display:grid;place-items:center;
+}
 .fab .ic{width:27px;height:27px}
+
+/* liste */
 .search{margin:6px 16px 12px;background:var(--fill);border-radius:12px;height:40px;display:flex;align-items:center;padding:0 10px;gap:6px;color:var(--sub)}
 .search .ic{width:20px;height:20px}
 .search input{flex:1;background:none;border:0;outline:0;font-size:17px;color:var(--text);min-width:0;font-family:inherit}
@@ -93,7 +105,10 @@ h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2p
 .subj{font-size:15px;margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .prev{color:var(--sub);font-size:15px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;line-height:1.3}
 .empty{padding:70px 24px;text-align:center;color:var(--sub);font-size:22px;font-weight:600}
-.tb{flex:none;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 20px 10px;background:var(--bg);border-top:.5px solid var(--sep);min-height:58px}
+.tb{
+  flex:none;display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:8px 20px 10px;
+  background:var(--bg);border-top:.5px solid var(--sep);min-height:58px;
+}
 .page.detail .tb{background:var(--card);display:flex;justify-content:space-around}
 .tb .ic{width:26px;height:26px;color:var(--blue)}
 .tb .mid{text-align:center;font-size:12px;line-height:1.35}
@@ -103,6 +118,8 @@ h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2p
 .tb .tbtn[disabled]{opacity:.35}
 .tb .tbtn.del{color:var(--red)}
 .tb .ibtn{padding:8px;display:grid;place-items:center}
+
+/* détail */
 .dh{display:flex;gap:12px;padding:12px 18px 6px;align-items:flex-start}
 .av{width:44px;height:44px;border-radius:50%;color:#fff;display:grid;place-items:center;font-weight:600;font-size:17px;flex:none}
 .dm{flex:1;min-width:0}
@@ -111,10 +128,16 @@ h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2p
 .dd{color:var(--sub);font-size:14px;text-align:right;max-width:38%;line-height:1.25}
 .ds{font-size:21px;font-weight:700;margin:12px 18px 14px;line-height:1.25;overflow-wrap:anywhere}
 .db{padding:0 18px 40px;font-size:17px;line-height:1.42;white-space:pre-wrap;overflow-wrap:anywhere;-webkit-user-select:text;user-select:text}
+
+/* écriture */
 #ov{position:absolute;inset:0;z-index:20;pointer-events:none}
 #ov.on{pointer-events:auto}
 .scrim{position:absolute;inset:0;background:rgba(0,0,0,.32);opacity:0;transition:opacity .3s}
-.csheet{position:absolute;left:0;right:0;bottom:0;top:34px;background:var(--card);border-radius:38px 38px 0 0;display:flex;flex-direction:column;transform:translateY(105%);transition:transform .38s cubic-bezier(.32,.72,0,1);box-shadow:0 -6px 30px rgba(0,0,0,.15)}
+.csheet{
+  position:absolute;left:0;right:0;bottom:0;top:34px;background:var(--card);border-radius:38px 38px 0 0;
+  display:flex;flex-direction:column;transform:translateY(105%);transition:transform .38s cubic-bezier(.32,.72,0,1);
+  box-shadow:0 -6px 30px rgba(0,0,0,.15);
+}
 #ov.on .scrim{opacity:1}
 #ov.on .csheet{transform:none}
 .chead{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;padding:14px 18px 8px;flex:none}
@@ -130,7 +153,12 @@ h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2p
 .f .fixed{flex:1;padding:13px 0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .f select{color:var(--blue);text-align:right;text-align-last:right;-webkit-appearance:none;appearance:none}
 .hint{color:var(--sub);font-size:13px;padding:8px 20px 0}
-.cbody{display:block;width:100%;border:0;outline:0;background:none;resize:none;font-family:inherit;font-size:17px;color:var(--text);padding:16px 20px 90px;min-height:260px;line-height:1.4}
+.cbody{
+  display:block;width:100%;border:0;outline:0;background:none;resize:none;font-family:inherit;font-size:17px;
+  color:var(--text);padding:16px 20px 90px;min-height:260px;line-height:1.4;
+}
+
+/* feuille d'actions */
 #as{position:absolute;inset:0;z-index:40;display:none}
 #as.on{display:block}
 .asb{position:absolute;inset:0;background:rgba(0,0,0,.3)}
@@ -141,7 +169,13 @@ h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2p
 .asg .ti+button,.asg button:first-child{border-top:0}
 .asg button.del{color:var(--red)}
 .asg button.cancel{font-weight:600}
-.banner{position:absolute;left:10px;right:10px;top:6px;z-index:50;background:var(--card2);border-radius:26px;padding:12px 16px;box-shadow:0 8px 30px rgba(0,0,0,.2);display:flex;gap:12px;align-items:center;cursor:pointer;transform:translateY(-170%);transition:transform .42s cubic-bezier(.32,.72,0,1)}
+
+/* bannière et toast */
+.banner{
+  position:absolute;left:10px;right:10px;top:6px;z-index:50;background:var(--card2);border-radius:26px;padding:12px 16px;
+  box-shadow:0 8px 30px rgba(0,0,0,.2);display:flex;gap:12px;align-items:center;cursor:pointer;
+  transform:translateY(-170%);transition:transform .42s cubic-bezier(.32,.72,0,1);
+}
 .banner.on{transform:none}
 .bi{width:38px;height:38px;border-radius:9px;background:linear-gradient(#3aa0ff,#0a62f0);color:#fff;display:grid;place-items:center;flex:none}
 .bi .ic{width:22px;height:22px}
@@ -151,7 +185,10 @@ h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2p
 .bt .r1 span:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .bt .r2{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .bt .r3{font-size:15px;color:var(--sub);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.toast{position:absolute;left:50%;bottom:84px;z-index:45;background:rgba(40,40,44,.94);color:#fff;font-size:16px;padding:12px 20px;border-radius:22px;transform:translate(-50%,20px);opacity:0;transition:all .3s;pointer-events:none;max-width:88%;text-align:center}
+.toast{
+  position:absolute;left:50%;bottom:84px;z-index:45;background:rgba(40,40,44,.94);color:#fff;font-size:16px;
+  padding:12px 20px;border-radius:22px;transform:translate(-50%,20px);opacity:0;transition:all .3s;pointer-events:none;max-width:88%;text-align:center;
+}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 @media (prefers-reduced-motion: reduce){ .page,.csheet,.scrim,.banner,.toast{transition:none} }
 </style>
@@ -168,6 +205,8 @@ h1.large{font-size:35px;font-weight:800;letter-spacing:-.4px;margin:12px 18px 2p
 'use strict';
 var K = 'mail-perso-v1';
 var $ = function(s){ return document.querySelector(s); };
+
+/* ---------- icônes ---------- */
 var ICONS = {
   tray:'<path d="M3.2 12.8l2.3-7A2 2 0 0 1 7.4 4.4h9.2a2 2 0 0 1 1.9 1.4l2.3 7"/><path d="M3.2 12.8v5a2 2 0 0 0 2 2h13.6a2 2 0 0 0 2-2v-5h-5.3a3 3 0 0 1-5.5 0z"/>',
   star:'<path d="M12 3.4l2.6 5.5 6 .8-4.4 4.2 1.1 6-5.3-2.9-5.3 2.9 1.1-6L3.4 9.7l6-.8z"/>',
@@ -189,6 +228,8 @@ var ICONS = {
 function svg(n, cls){
   return '<svg class="ic ' + (cls||'') + '" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICONS[n] + '</svg>';
 }
+
+/* ---------- utilitaires ---------- */
 function esc(s){ return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
 function uid(){ return Date.now().toString(36) + Math.random().toString(36).slice(2,7); }
 function norm(s){ return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,''); }
@@ -215,21 +256,18 @@ function initials(name){
 }
 var AV = ['#8e8e93','#5b8fd6','#d68a5b','#4fae86','#a172d6','#d6605b','#c9a23c'];
 function avColor(s){ var h=0; s=String(s||''); for (var i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))>>>0; return AV[h%AV.length]; }
-function localDateTimeValue(ts){
-  var d = new Date(ts);
-  var yyyy = d.getFullYear();
-  var mm = String(d.getMonth()+1).padStart(2,'0');
-  var dd = String(d.getDate()).padStart(2,'0');
-  var hh = String(d.getHours()).padStart(2,'0');
-  var mi = String(d.getMinutes()).padStart(2,'0');
-  return yyyy + '-' + mm + '-' + dd + 'T' + hh + ':' + mi;
+function formatDateTimeInput(ts){
+  var d = new Date(ts || Date.now());
+  function pad(v){ return String(v).padStart(2,'0'); }
+  return d.getFullYear() + '-' + pad(d.getMonth()+1) + '-' + pad(d.getDate()) + 'T' + pad(d.getHours()) + ':' + pad(d.getMinutes());
 }
-function parseInputDate(value){
-  if (!value) return Date.now();
+function parseDateTimeInput(value){
+  if (!value) return new Date();
   var d = new Date(value);
-  if (Number.isNaN(d.getTime())) return Date.now();
-  return d.getTime();
+  return isNaN(d.getTime()) ? null : d;
 }
+
+/* ---------- données ---------- */
 function seed(){
   var now = Date.now();
   return {
@@ -238,7 +276,7 @@ function seed(){
     msgs:[{
       id:uid(), from:{name:'Mail', email:'bonjour@mail.app'}, to:{name:'Moi', email:'moi@icloud.com'},
       subject:'Bienvenue dans votre boîte Mail',
-      body:"Voici votre boîte Mail personnelle.\n\nTouchez le bouton d’écriture en bas à droite pour vous envoyer un message : choisissez le nom de l’expéditeur, écrivez l’objet et le contenu, puis envoyez le message.\n\nVotre date d’envoi peut aussi être réglée manuellement.",
+      body:"Voici votre boîte Mail personnelle.\n\nTouchez le bouton d’écriture en bas à droite pour vous envoyer un message : choisissez le nom de l’expéditeur, écrivez l’objet, le message, et l’heure de réception.\n\nVous pouvez aussi modifier la date d’un message envoyé depuis la vue détaillée.",
       date:now, read:false, box:'inbox'
     }]
   };
@@ -255,6 +293,7 @@ function save(){ try{ localStorage.setItem(K, JSON.stringify(S)); }catch(e){} }
 function byId(id){ for (var i=0;i<S.msgs.length;i++) if (S.msgs[i].id===id) return S.msgs[i]; return null; }
 function removeMsg(id){ S.msgs = S.msgs.filter(function(m){ return m.id!==id; }); }
 function isVip(email){ return S.vips.indexOf(String(email||'').toLowerCase())>-1; }
+
 var BOXES = {
   inbox:  {name:'Réception',   icon:'tray',   f:function(m){ return m.box==='inbox'; }},
   vip:    {name:'VIP',         icon:'star',   f:function(m){ return m.box==='inbox' && isVip(m.from.email); }},
@@ -287,9 +326,12 @@ function whoOf(m){
   if (m.box==='drafts') return (m.draft && m.draft.mode==='reply') ? ('À : ' + ((m.to&&(m.to.name||m.to.email))||'—')) : (m.draft&&m.draft.fromName ? m.draft.fromName : 'Sans expéditeur');
   return m.from.name;
 }
+
+/* ---------- pages ---------- */
 var app = $('#app');
 var stack = [];
 function top(){ return stack[stack.length-1]; }
+
 function pageBoxes(){
   function row(k){
     var b = BOXES[k], n = count(k);
@@ -352,7 +394,6 @@ function pageDetail(e){
     + '<h2 class="ds">'+esc(m.subject)+'</h2><div class="db">'+esc(m.body)+'</div></div>'
     + '<div class="tb"><button class="ibtn" data-act="trash-msg" aria-label="Corbeille">'+svg('trash')+'</button>'
     + '<button class="ibtn" data-act="reply" aria-label="Répondre">'+svg('reply')+'</button>'
-    + (m.box==='sent' ? '<button class="ibtn" data-act="date-msg" aria-label="Modifier la date">'+svg('doc')+'</button>' : '')
     + '<button class="ibtn" data-act="compose" aria-label="Nouveau message">'+svg('compose')+'</button></div>';
 }
 function render(e){
@@ -361,6 +402,7 @@ function render(e){
   var sc2 = e.el.querySelector('.scroll'); if (sc2) sc2.scrollTop = st;
 }
 function refreshAll(){ stack.forEach(render); }
+
 function push(e, animate){
   var prev = top();
   e.el = document.createElement('div');
@@ -405,6 +447,8 @@ function openMessage(id){
   push(le, false);
   openDetail(id, box, listItems(le).map(function(x){ return x.id; }));
 }
+
+/* ---------- feuille d'actions ---------- */
 function actionSheet(title, actions){
   var el = $('#as');
   el.innerHTML = '<div class="asb" data-act="as-close"></div><div class="asp"><div class="asg">'
@@ -415,6 +459,8 @@ function actionSheet(title, actions){
   el.classList.add('on');
 }
 function closeSheet(){ var el = $('#as'); el.classList.remove('on'); el.innerHTML=''; el._actions=null; }
+
+/* ---------- bannière et toast ---------- */
 var bannerTimer, bannerId = null;
 function showBanner(m, n){
   bannerId = m.id;
@@ -432,6 +478,8 @@ function toast(t){
   var el = $('#toast'); el.textContent = t; el.classList.add('on');
   clearTimeout(toastTimer); toastTimer = setTimeout(function(){ el.classList.remove('on'); }, 2600);
 }
+
+/* ---------- écriture ---------- */
 var C = null;
 function cValid(){
   if (!C) return false;
@@ -461,13 +509,12 @@ function composeHTML(){
         + field('Objet :','subject',{})
         + '<div class="f"><label>Réception :</label><select data-f="delay">'
         + delays.map(function(d){ return '<option value="'+d[0]+'"'+(f.delay===d[0]?' selected':'')+'>'+d[1]+'</option>'; }).join('')
-        + '</select></div>'
-        + field('Date d’envoi :','sendDate',{type:'datetime-local'});
+        + '</select></div>';
   } else {
     top = '<div class="f"><label>De :</label><div class="fixed">'+esc(S.me.name+' <'+S.me.email+'>')+'</div></div>'
         + '<div class="f"><label>À :</label><div class="fixed">'+esc((f.toName?f.toName+' ':'')+'<'+f.to+'>')+'</div></div>'
         + field('Objet :','subject',{})
-        + field('Date d’envoi :','sendDate',{type:'datetime-local'});
+        + '<div class="f"><label>Envoyé le :</label><input data-f="sentDate" type="datetime-local" value="'+esc(formatDateTimeInput(f.sentDate || Date.now()))+'"></div>';
   }
   return '<div class="scrim" data-act="ccancel"></div><div class="csheet" role="dialog" aria-label="Nouveau message">'
     + '<div class="chead"><button class="txt" data-act="ccancel">Annuler</button><div class="ctitle">'+(inMode?'Nouveau message':'Répondre')+'</div>'
@@ -478,7 +525,7 @@ function composeHTML(){
 function openCompose(mode, opts){
   opts = opts||{};
   C = {mode:mode, draftId:opts.draftId||null,
-    f:Object.assign({fromName:'',fromEmail:'',to:S.me.email,toName:'',subject:'',body:'',delay:'0',sendDate:localDateTimeValue(Date.now())}, opts.f||{})};
+    f:Object.assign({fromName:'',fromEmail:'',to:S.me.email,toName:'',subject:'',body:'',delay:'0',sentDate:formatDateTimeInput(Date.now())}, opts.f||{})};
   C.init = JSON.stringify(C.f);
   var ov = $('#ov');
   ov.innerHTML = composeHTML();
@@ -491,7 +538,7 @@ function openDraft(m){
   var d = m.draft || {mode:'in'};
   openCompose(d.mode, {draftId:m.id, f:{
     fromName:d.fromName||'', fromEmail:d.fromEmail||'', to:(m.to&&m.to.email)||S.me.email, toName:(m.to&&m.to.name)||'',
-    subject:m.subject==='(Sans objet)'?'':m.subject, body:m.body||'', delay:d.delay||'0', sendDate:localDateTimeValue(m.date||Date.now())
+    subject:m.subject==='(Sans objet)'?'':m.subject, body:m.body||'', delay:d.delay||'0', sentDate:formatDateTimeInput(m.date||Date.now())
   }});
 }
 function closeCompose(instant){
@@ -523,6 +570,17 @@ function saveDraft(){
   S.msgs.push(msg); save(); closeCompose(); refreshAll();
   toast('Brouillon enregistré');
 }
+function changeMessageDate(id){
+  var m = byId(id); if (!m) return;
+  var current = formatDateTimeInput(m.date || Date.now());
+  var value = prompt('Nouvelle date du message envoy\u00e9 (format : YYYY-MM-DDTHH:mm)', current);
+  if (value === null) return;
+  var d = parseDateTimeInput(value);
+  if (!d){ toast('Date invalide'); return; }
+  m.date = d.getTime();
+  save(); refreshAll();
+  toast('Date du message modifiée');
+}
 function sendCompose(){
   if (!C || !cValid()) return;
   var f = C.f;
@@ -532,24 +590,22 @@ function sendCompose(){
     var email = f.fromEmail.trim() || (slug(name)+'@exemple.fr');
     var to = f.to.trim() || S.me.email;
     S.me.email = to;
-    var sendAt = parseInputDate(f.sendDate || localDateTimeValue(Date.now()));
     var msg = {id:uid(), from:{name:name, email:email}, to:{name:S.me.name, email:to},
-      subject:f.subject.trim()||'(Sans objet)', body:f.body, date:sendAt, read:false, box:'inbox'};
+      subject:f.subject.trim()||'(Sans objet)', body:f.body, date:0, read:false, box:'inbox'};
     var d = parseInt(f.delay,10)||0;
     closeCompose();
     if (d===0){
-      S.msgs.push(msg); save(); refreshAll();
+      msg.date = Date.now(); S.msgs.push(msg); save(); refreshAll();
       setTimeout(function(){ showBanner(msg); }, 500);
     } else {
-      var at = sendAt || Date.now() + d*1000;
-      if (sendAt && sendAt < Date.now()) at = Date.now() + d*1000;
-      S.pending.push({at:at, msg:msg}); save(); refreshAll();
+      S.pending.push({at:Date.now()+d*1000, msg:msg}); save(); refreshAll();
       toast(d<60 ? 'Message reçu dans '+d+' secondes' : 'Message reçu dans '+(d/60)+(d===60?' minute':' minutes'));
     }
   } else {
-    var sentAt = parseInputDate(f.sendDate || localDateTimeValue(Date.now()));
+    var sentDate = parseDateTimeInput(f.sentDate);
+    var msgDate = sentDate ? sentDate.getTime() : Date.now();
     S.msgs.push({id:uid(), from:{name:S.me.name, email:S.me.email}, to:{name:f.toName||'', email:f.to},
-      subject:f.subject.trim()||'(Sans objet)', body:f.body, date:sentAt, read:true, box:'sent'});
+      subject:f.subject.trim()||'(Sans objet)', body:f.body, date:msgDate, read:true, box:'sent'});
     save(); closeCompose(); refreshAll();
     toast('Message envoyé');
   }
@@ -558,8 +614,10 @@ function startReply(id){
   var m = byId(id); if (!m) return;
   var target = (m.box==='sent') ? m.to : m.from;
   var subj = /^re\s*:/i.test(m.subject) ? m.subject : 'Re: '+m.subject;
-  openCompose('reply', {f:{to:target.email, toName:target.name||'', subject:subj, sendDate:localDateTimeValue(m.date||Date.now())}});
+  openCompose('reply', {f:{to:target.email, toName:target.name||'', subject:subj, sentDate:formatDateTimeInput(m.date || Date.now())}});
 }
+
+/* ---------- réception différée ---------- */
 function tick(){
   var now = Date.now();
   var due = S.pending.filter(function(p){ return p.at<=now; });
@@ -569,6 +627,8 @@ function tick(){
   save(); refreshAll();
   showBanner(due[due.length-1].msg, due.length);
 }
+
+/* ---------- actions ---------- */
 function trashOne(id){
   var m = byId(id); if (!m) return;
   if (m.box==='trash') removeMsg(id); else { m.prevBox = m.box; m.box = 'trash'; }
@@ -611,28 +671,20 @@ function act(a, t){
       } else { trashOne(e.id); save(); pop(); }
       break;
     }
-    case 'date-msg': {
-      var mm = byId(e.id); if (!mm || mm.box!=='sent') break;
-      var current = localDateTimeValue(mm.date || Date.now());
-      var val = window.prompt('Nouvelle date d’envoi (YYYY-MM-DDTHH:mm)', current);
-      if (val===null) break;
-      var dateTs = parseInputDate(val);
-      if (Number.isNaN(dateTs)) { toast('Date invalide'); break; }
-      mm.date = dateTs; save(); render(e); refreshAll(); toast('Date du message modifiée');
-      break;
-    }
     case 'reply': startReply(e.id); break;
     case 'sender': {
       var sm = byId(e.id); if (!sm) break;
       var vip = isVip(sm.from.email);
-      actionSheet(sm.from.name+' <'+sm.from.email+'>', [
+      var actions = [
         {label: vip?'Retirer des VIP':'Ajouter aux VIP', fn:function(){
           var em = sm.from.email.toLowerCase();
           if (vip) S.vips = S.vips.filter(function(x){ return x!==em; }); else S.vips.push(em);
           save(); refreshAll();
         }},
         {label:'Répondre', fn:function(){ startReply(sm.id); }}
-      ]);
+      ];
+      if (sm.box==='sent') actions.push({label:'Modifier la date', fn:function(){ changeMessageDate(sm.id); }});
+      actionSheet(sm.from.name+' <'+sm.from.email+'>', actions);
       break;
     }
     case 'menu':
@@ -654,6 +706,8 @@ function act(a, t){
     case 'banner-open': if (bannerId) openMessage(bannerId); break;
   }
 }
+
+/* ---------- événements ---------- */
 document.addEventListener('click', function(ev){
   var asBtn = ev.target.closest('#as [data-as]');
   if (asBtn){
@@ -683,7 +737,7 @@ document.addEventListener('input', function(ev){
 document.addEventListener('change', function(ev){
   var el = ev.target, k = el.dataset && el.dataset.f;
   if (k==='delay' && C){ C.f.delay = el.value; }
-  if (k==='sendDate' && C){ C.f.sendDate = el.value; }
+  if (k==='sentDate' && C){ C.f.sentDate = el.value; }
 });
 document.addEventListener('keydown', function(ev){
   if (ev.target.id==='q' && ev.key==='Enter'){ ev.target.blur(); }
@@ -699,6 +753,8 @@ document.addEventListener('touchend', function(ev){
   tx = null;
 }, {passive:true});
 document.addEventListener('visibilitychange', function(){ if (!document.hidden) tick(); });
+
+/* ---------- démarrage ---------- */
 push({t:'boxes'}, false);
 tick();
 setInterval(tick, 1000);
