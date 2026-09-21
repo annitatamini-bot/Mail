@@ -245,7 +245,7 @@ function fmtShort(ts){
 }
 function fmtLong(ts){
   var d = new Date(ts);
-  if (sameDay(d,new Date())) return "Aujourd\u2019hui à " + hhmm(d);
+  if (sameDay(d,new Date())) return "Aujourd’hui à " + hhmm(d);
   return d.toLocaleDateString('fr-FR',{day:'numeric',month:'short',year:'numeric'}) + ' à ' + hhmm(d);
 }
 function preview(m){ return String(m.body||'').replace(/\s+/g,' ').trim().slice(0,160); }
@@ -256,6 +256,21 @@ function initials(name){
 }
 var AV = ['#8e8e93','#5b8fd6','#d68a5b','#4fae86','#a172d6','#d6605b','#c9a23c'];
 function avColor(s){ var h=0; s=String(s||''); for (var i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))>>>0; return AV[h%AV.length]; }
+function localDateTimeValue(ts){
+  var d = new Date(ts);
+  var yyyy = d.getFullYear();
+  var mm = String(d.getMonth()+1).padStart(2,'0');
+  var dd = String(d.getDate()).padStart(2,'0');
+  var hh = String(d.getHours()).padStart(2,'0');
+  var mi = String(d.getMinutes()).padStart(2,'0');
+  return yyyy + '-' + mm + '-' + dd + 'T' + hh + ':' + mi;
+}
+function parseInputDate(value){
+  if (!value) return Date.now();
+  var d = new Date(value);
+  if (Number.isNaN(d.getTime())) return Date.now();
+  return d.getTime();
+}
 
 /* ---------- données ---------- */
 function seed(){
@@ -266,7 +281,7 @@ function seed(){
     msgs:[{
       id:uid(), from:{name:'Mail', email:'bonjour@mail.app'}, to:{name:'Moi', email:'moi@icloud.com'},
       subject:'Bienvenue dans votre boîte Mail',
-      body:"Voici votre boîte Mail personnelle.\n\nTouchez le bouton d\u2019écriture en bas à droite pour vous envoyer un message : choisissez le nom de l\u2019expéditeur, écrivez l\u2019objet et le texte, puis envoyez.\n\nLe message arrive dans Réception comme s\u2019il venait de l\u2019extérieur. Vous pouvez le recevoir tout de suite ou après quelques secondes ou minutes.",
+      body:"Voici votre boîte Mail personnelle.\n\nTouchez le bouton d’écriture en bas à droite pour vous envoyer un message : choisissez le nom de l’expéditeur, écrivez l’objet et le contenu, puis envoyez le message.\n\nVotre date d’envoi peut aussi être réglée manuellement.",
       date:now, read:false, box:'inbox'
     }]
   };
@@ -332,7 +347,7 @@ function pageBoxes(){
   }
   var open = S.icloud !== false;
   return '<div class="nav end"><button class="pill" data-act="menu">Modifier</button></div>'
-    + '<div class="scroll"><h1 class="large">Boîtes</h1><div class="subl">MÀJ à l\u2019instant</div>'
+    + '<div class="scroll"><h1 class="large">Boîtes</h1><div class="subl">MÀJ à l’instant</div>'
     + '<div class="card">'+row('inbox')+row('vip')+row('unread')+'</div>'
     + '<div class="sech" data-act="toggle-icloud"><span>iCloud</span>'+svg('chevd', open?'':'rot')+'</div>'
     + (open ? '<div class="card">'+['drafts','sent','junk','trash'].map(row).join('')+'</div>' : '')
@@ -360,7 +375,7 @@ function pageList(e){
     tb = '<div class="tb"><div><button class="tbtn" data-act="sel-read" '+(has?'':'disabled')+'>Lu / Non lu</button></div><div></div>'
        + '<div class="r"><button class="tbtn del" data-act="sel-del" '+(has?'':'disabled')+'>'+(e.box==='trash'?'Supprimer':'Corbeille')+'</button></div></div>';
   } else {
-    tb = '<div class="tb"><div></div><div class="mid">MÀJ à l\u2019instant'+(e.box==='inbox'||e.box==='unread'||e.box==='vip'?'<span>'+n+(n>1?' non lus':' non lu')+'</span>':'')+'</div>'
+    tb = '<div class="tb"><div></div><div class="mid">MÀJ à l’instant'+(e.box==='inbox'||e.box==='unread'||e.box==='vip'?'<span>'+n+(n>1?' non lus':' non lu')+'</span>':'')+'</div>'
        + '<div class="r"><button class="ibtn" data-act="compose" aria-label="Nouveau message">'+svg('compose')+'</button></div></div>';
   }
   return '<div class="nav"><button class="back" data-act="back">'+svg('chevl')+'<span>Boîtes</span></button>'
@@ -379,11 +394,12 @@ function pageDetail(e){
     + '<div class="grp"><button class="arrow" data-act="prev" '+(i<=0?'disabled':'')+' aria-label="Message précédent">'+svg('chevu')+'</button>'
     + '<button class="arrow" data-act="next" '+(i<0||i>=e.ctx.length-1?'disabled':'')+' aria-label="Message suivant">'+svg('chevd')+'</button></div></div>'
     + '<div class="scroll"><div class="dh"><div class="av" style="background:'+avColor(m.from.name)+'">'+esc(initials(m.from.name))+'</div>'
-    + '<div class="dm"><div class="dn" data-act="sender">'+esc(m.from.name)+(isVip(m.from.email)?' \u2605':'')+'</div><div class="dto">À : '+esc(toLine)+'</div></div>'
+    + '<div class="dm"><div class="dn" data-act="sender">'+esc(m.from.name)+(isVip(m.from.email)?' ★':'')+'</div><div class="dto">À : '+esc(toLine)+'</div></div>'
     + '<div class="dd">'+esc(fmtLong(m.date))+'</div></div>'
     + '<h2 class="ds">'+esc(m.subject)+'</h2><div class="db">'+esc(m.body)+'</div></div>'
     + '<div class="tb"><button class="ibtn" data-act="trash-msg" aria-label="Corbeille">'+svg('trash')+'</button>'
     + '<button class="ibtn" data-act="reply" aria-label="Répondre">'+svg('reply')+'</button>'
+    + (m.box==='sent' ? '<button class="ibtn" data-act="date-msg" aria-label="Modifier la date">'+svg('doc')+'</button>' : '')
     + '<button class="ibtn" data-act="compose" aria-label="Nouveau message">'+svg('compose')+'</button></div>';
 }
 function render(e){
@@ -493,17 +509,20 @@ function composeHTML(){
   var delays = [['0','Immédiatement'],['10','Dans 10 secondes'],['60','Dans 1 minute'],['300','Dans 5 minutes']];
   var top;
   if (inMode){
-    top = field('De :','fromName',{ph:"Nom de l\u2019expéditeur",cap:'words'})
+    top = field('De :','fromName',{ph:"Nom de l’expéditeur",cap:'words'})
         + field('Adresse :','fromEmail',{ph:'facultatif',type:'email',mode:'email',cap:'none'})
         + field('À :','to',{type:'email',mode:'email',cap:'none'})
         + field('Objet :','subject',{})
         + '<div class="f"><label>Réception :</label><select data-f="delay">'
         + delays.map(function(d){ return '<option value="'+d[0]+'"'+(f.delay===d[0]?' selected':'')+'>'+d[1]+'</option>'; }).join('')
-        + '</select></div>';
+        + '</select></div>'
+        + field('Date d’envoi :','sendDate',{type:'datetime-local'})
+        + '<div class="hint">La date peut être modifiée avant l’envoi.</div>';
   } else {
     top = '<div class="f"><label>De :</label><div class="fixed">'+esc(S.me.name+' <'+S.me.email+'>')+'</div></div>'
         + '<div class="f"><label>À :</label><div class="fixed">'+esc((f.toName?f.toName+' ':'')+'<'+f.to+'>')+'</div></div>'
-        + field('Objet :','subject',{});
+        + field('Objet :','subject',{})
+        + field('Date d’envoi :','sendDate',{type:'datetime-local'});
   }
   return '<div class="scrim" data-act="ccancel"></div><div class="csheet" role="dialog" aria-label="Nouveau message">'
     + '<div class="chead"><button class="txt" data-act="ccancel">Annuler</button><div class="ctitle">'+(inMode?'Nouveau message':'Répondre')+'</div>'
@@ -514,7 +533,7 @@ function composeHTML(){
 function openCompose(mode, opts){
   opts = opts||{};
   C = {mode:mode, draftId:opts.draftId||null,
-    f:Object.assign({fromName:'',fromEmail:'',to:S.me.email,toName:'',subject:'',body:'',delay:'0'}, opts.f||{})};
+    f:Object.assign({fromName:'',fromEmail:'',to:S.me.email,toName:'',subject:'',body:'',delay:'0',sendDate:localDateTimeValue(Date.now())}, opts.f||{})};
   C.init = JSON.stringify(C.f);
   var ov = $('#ov');
   ov.innerHTML = composeHTML();
@@ -527,7 +546,7 @@ function openDraft(m){
   var d = m.draft || {mode:'in'};
   openCompose(d.mode, {draftId:m.id, f:{
     fromName:d.fromName||'', fromEmail:d.fromEmail||'', to:(m.to&&m.to.email)||S.me.email, toName:(m.to&&m.to.name)||'',
-    subject:m.subject==='(Sans objet)'?'':m.subject, body:m.body||'', delay:d.delay||'0'
+    subject:m.subject==='(Sans objet)'?'':m.subject, body:m.body||'', delay:d.delay||'0', sendDate:localDateTimeValue(m.date||Date.now())
   }});
 }
 function closeCompose(instant){
@@ -568,20 +587,24 @@ function sendCompose(){
     var email = f.fromEmail.trim() || (slug(name)+'@exemple.fr');
     var to = f.to.trim() || S.me.email;
     S.me.email = to;
+    var sendAt = parseInputDate(f.sendDate || localDateTimeValue(Date.now()));
     var msg = {id:uid(), from:{name:name, email:email}, to:{name:S.me.name, email:to},
-      subject:f.subject.trim()||'(Sans objet)', body:f.body, date:0, read:false, box:'inbox'};
+      subject:f.subject.trim()||'(Sans objet)', body:f.body, date:sendAt, read:false, box:'inbox'};
     var d = parseInt(f.delay,10)||0;
     closeCompose();
     if (d===0){
-      msg.date = Date.now(); S.msgs.push(msg); save(); refreshAll();
+      S.msgs.push(msg); save(); refreshAll();
       setTimeout(function(){ showBanner(msg); }, 500);
     } else {
-      S.pending.push({at:Date.now()+d*1000, msg:msg}); save(); refreshAll();
+      var at = sendAt || Date.now() + d*1000;
+      if (sendAt && sendAt < Date.now()) at = Date.now() + d*1000;
+      S.pending.push({at:at, msg:msg}); save(); refreshAll();
       toast(d<60 ? 'Message reçu dans '+d+' secondes' : 'Message reçu dans '+(d/60)+(d===60?' minute':' minutes'));
     }
   } else {
+    var sentAt = parseInputDate(f.sendDate || localDateTimeValue(Date.now()));
     S.msgs.push({id:uid(), from:{name:S.me.name, email:S.me.email}, to:{name:f.toName||'', email:f.to},
-      subject:f.subject.trim()||'(Sans objet)', body:f.body, date:Date.now(), read:true, box:'sent'});
+      subject:f.subject.trim()||'(Sans objet)', body:f.body, date:sentAt, read:true, box:'sent'});
     save(); closeCompose(); refreshAll();
     toast('Message envoyé');
   }
@@ -590,7 +613,7 @@ function startReply(id){
   var m = byId(id); if (!m) return;
   var target = (m.box==='sent') ? m.to : m.from;
   var subj = /^re\s*:/i.test(m.subject) ? m.subject : 'Re: '+m.subject;
-  openCompose('reply', {f:{to:target.email, toName:target.name||'', subject:subj}});
+  openCompose('reply', {f:{to:target.email, toName:target.name||'', subject:subj, sendDate:localDateTimeValue(m.date||Date.now())}});
 }
 
 /* ---------- réception différée ---------- */
@@ -645,6 +668,16 @@ function act(a, t){
       if (mm.box==='trash'){
         actionSheet(null, [{label:'Supprimer définitivement', del:true, fn:function(){ removeMsg(e.id); save(); pop(); }}]);
       } else { trashOne(e.id); save(); pop(); }
+      break;
+    }
+    case 'date-msg': {
+      var mm = byId(e.id); if (!mm || mm.box!=='sent') break;
+      var current = localDateTimeValue(mm.date || Date.now());
+      var val = window.prompt('Nouvelle date d’envoi (YYYY-MM-DDTHH:mm)', current);
+      if (val===null) break;
+      var dateTs = parseInputDate(val);
+      if (Number.isNaN(dateTs)) { toast('Date invalide'); break; }
+      mm.date = dateTs; save(); render(e); refreshAll(); toast('Date du message modifiée');
       break;
     }
     case 'reply': startReply(e.id); break;
@@ -711,6 +744,7 @@ document.addEventListener('input', function(ev){
 document.addEventListener('change', function(ev){
   var el = ev.target, k = el.dataset && el.dataset.f;
   if (k==='delay' && C){ C.f.delay = el.value; }
+  if (k==='sendDate' && C){ C.f.sendDate = el.value; }
 });
 document.addEventListener('keydown', function(ev){
   if (ev.target.id==='q' && ev.key==='Enter'){ ev.target.blur(); }
